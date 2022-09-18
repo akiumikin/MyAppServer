@@ -22,7 +22,7 @@ services:
       - ./:/var/www/app
       - vendor-rails:/var/www/app/vendor
       - ~/.ssh:/root/.ssh
-    # command: "bash -c 'rm -f tmp/pids/server.pid && bundle && bin/rails db:create db:migrate && bin/rails db:seed && bundle exec rails server -b 0.0.0.0'"
+    command: "bash -c 'rm -f tmp/pids/server.pid && bundle && bin/rails db:create db:migrate && bin/rails db:seed && bundle exec puma -C config/puma.rb'"
 
   mysql:
     image: mysql:8.0
@@ -42,9 +42,10 @@ services:
     build:
       context: containers/nginx
     container_name: nginx
-    # volumes:
-    #   - public-data:/webapp/public
-    #   - tmp-data:/webapp/tmp
+    volumes:
+      - public-nginx-data:/webapp/public
+      - ./tmp:/webapp/tmp
+      - ./containers/conf.d:/etc/nginx/conf.d
     ports:
       - 80:80
       - 443:443
@@ -56,3 +57,7 @@ volumes:
     driver: 'local'
   mysql-data:
     name: mysql
+  public-nginx-data:
+    name: nginx-pub
+  tmp-nginx-data:
+    name: nginx-tmp

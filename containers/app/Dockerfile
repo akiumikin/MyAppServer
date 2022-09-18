@@ -17,4 +17,6 @@ RUN apt update && \
     apt list installed && \
     apt clean
 
+RUN mkdir -p tmp/sockets
+
 WORKDIR $WORKSPACE
