@@ -14,6 +14,6 @@ test:
   <<: *default
   database: app_test
 
-staging:
+production:
   <<: *default
   database: app_production
