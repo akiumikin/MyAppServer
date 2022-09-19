@@ -70,3 +70,18 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+
+######################################################################
+
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-puma'
+
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
+end

@@ -21,7 +21,7 @@ services:
     volumes:
       - ./:/var/www/app
       - vendor-rails:/var/www/app/vendor
-      - ~/.ssh:/root/.ssh
+      - ~/.ssh/private/myapp:/root/.ssh
     command: "bash -c 'rm -f tmp/pids/server.pid && bundle && bin/rails db:create db:migrate && bin/rails db:seed && bundle exec puma -C config/puma.rb'"
 
   mysql:
@@ -38,19 +38,19 @@ services:
       - mysql-data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --sort_buffer_size=1048576
 
-  nginx:
-    build:
-      context: containers/nginx
-    container_name: nginx
-    volumes:
-      - public-nginx-data:/webapp/public
-      - ./tmp:/webapp/tmp
-      - ./containers/conf.d:/etc/nginx/conf.d
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - rails
+  # nginx:
+  #   build:
+  #     context: containers/nginx
+  #   container_name: nginx
+  #   volumes:
+  #     - public-nginx-data:/webapp/public
+  #     - ./tmp:/webapp/tmp
+  #     - ./containers/conf.d:/etc/nginx/conf.d
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   depends_on:
+  #     - rails
 
 volumes:
   vendor-rails:
